@@ -1,16 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import { connect } from 'react-redux';
 import CardList from '../components/CardList';
 import SearchBox from '../components/SearchBox';
 import Scroll from '../components/Scroll';
+import ErrorBoundary from '../components/ErrorBoundary';
+import './App.css';
 
-function App() {
+import { setSearchField } from '../actions';
+
+const mapStateToProps = state => {
+	return {
+		searchField: state.searchField
+	}
+}
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+	}
+}
+
+function App(props) {
 	const [ robotList, setRobotList ] = useState([]);
-	const [ searchField, setSearchField ] = useState('');
-
-	const onSearchChange = (event) => {
-		setSearchField(event.target.value);
-	};
+	const { searchField, onSearchChange } = props;
 
 	const filteredRobots = robotList.filter(robot => {
 		return robot.name.toLowerCase().includes(searchField.toLowerCase());
@@ -34,10 +46,12 @@ function App() {
 				<h1 className='f1'>RoboFriends</h1>
 				<SearchBox searchChange={onSearchChange} />
 				<Scroll>
-					<CardList robots={filteredRobots} />
+					<ErrorBoundary>
+						<CardList robots={filteredRobots} />
+					</ErrorBoundary>
 				</Scroll>
 			</div>
 		)
 }
 
-export default App;
+export default connect(mapStateToProps, mapDispatchToProps)(App);
