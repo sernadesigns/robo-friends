@@ -1,6 +1,6 @@
 import Card from './Card';
 
-function CardList({ robots }) {
+const CardList = ({ robots }) => {
 	// if (true) {
 	// 	throw new Error('NOOOOOO!');
 	// }
