@@ -9,12 +9,12 @@ const CardList = ({ robots }) => {
 			{
 				robots.map(robot => {
 					return (
-						<Card 
+						<Card
 							key={robot.id}
-							id={robot.id} 
-							name={robot.name} 
-							username={robot.username} 
-							email={robot.email} 
+							id={robot.id}
+							name={robot.name}
+							username={robot.username}
+							email={robot.email}
 						/>
 					);
 				})
